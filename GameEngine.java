@@ -6,6 +6,8 @@ public class GameEngine {
 	private int playerCol;
 	private int exitRow;
 	private int exitCol;
+	// Added coins field variable
+	private int coins = 0;
 
 	// Cell Type Constants
 	private static final int FLOOR = 0;
@@ -68,6 +70,11 @@ public class GameEngine {
 			return; // Movement blocked
 		}
 
+		// Added check to see if target cell has a coin
+		if (targetCell == COIN){
+			coins++;
+		}
+
 		// Move the Player
 		// Current position becomes Floor (or Goal if player was standing on one)
 		// Note: For simplicity, this engine assumes player replaces the cell.
@@ -79,5 +86,14 @@ public class GameEngine {
 		board.setCell(playerRow, playerCol, PLAYER);
 		board.stepCounter.increaseSteps();
 
+	}
+
+	/**
+ 	* Returns the total number of coins collected by the player in the current game.
+ 	*
+ 	* @return the current coin count
+ 	*/
+	public int getCoins(){
+		return coins;
 	}
 }

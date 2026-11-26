@@ -41,18 +41,22 @@ public class MazeGUI extends JFrame {
 					case KeyEvent.VK_LEFT -> engine.movePlayer(0, -1);
 					case KeyEvent.VK_RIGHT -> engine.movePlayer(0, 1);
 				}
+<<<<<<< HEAD
 				stepCounter = currentBoard.stepCounter.getSteps();
 				infoPanel.setInfoSteps(stepCounter);
+=======
+				// Added update to infoPanel, updates whenever key is pressed
+				infoPanel.setInfoCoins(engine.getCoins());
+>>>>>>> 6a0b277895a5c839852897440dde7136add1f797
 				gamePanel.repaint();
 
 				// Check for victory
+				// FIXED: Score calculation: score = (steps * -1) + (coins * 5)
 				if (engine.playerWins()) {
+					int totalPoints = (infoPanel.getInfoSteps() * -1) + (infoPanel.getInfoCoins() * 5);
 					JOptionPane.showMessageDialog(MazeGUI.this,
-							"Congratulations! You found the exit.\nYour got "
-									+ infoPanel.getInfoSteps() * 1 + infoPanel.getInfoCoins()
-									+ "points",
+							"Congratulations! You found the exit.\nYour got " + totalPoints + "points",
 							"Level Complete", JOptionPane.INFORMATION_MESSAGE);
-
 					// Optional: Disable engine to prevent movement after win
 					engine = null;
 					resetItem.setEnabled(false);
@@ -94,6 +98,8 @@ public class MazeGUI extends JFrame {
 			resetItem.setEnabled(true);
 			gamePanel.setBoard(currentBoard);
 			gamePanel.repaint();
+			// Reset coins
+			infoPanel.setInfoCoins(0);
 		}
 	}
 
@@ -103,6 +109,8 @@ public class MazeGUI extends JFrame {
 			engine = new GameEngine(currentBoard);
 			gamePanel.setBoard(currentBoard);
 			gamePanel.repaint();
+			// Reset Coins
+			infoPanel.setInfoCoins(0);
 		}
 	}
 
