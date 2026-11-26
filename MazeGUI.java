@@ -41,6 +41,8 @@ public class MazeGUI extends JFrame {
 					case KeyEvent.VK_LEFT -> engine.movePlayer(0, -1);
 					case KeyEvent.VK_RIGHT -> engine.movePlayer(0, 1);
 				}
+				stepCounter = currentBoard.stepCounter.getSteps();
+				infoPanel.setInfoSteps(stepCounter);
 				gamePanel.repaint();
 
 				// Check for victory
