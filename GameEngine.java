@@ -1,4 +1,5 @@
 package edu.txst.project;
+import java.util.ArrayList;
 
 public class GameEngine {
 	private Board board;
@@ -6,6 +7,7 @@ public class GameEngine {
 	private int playerCol;
 	private int exitRow;
 	private int exitCol;
+	private ArrayList<int[]> exits = new ArrayList<int[]>();  // exit array list to hold groups of exit coordinates
 	// Added coins field variable
 	private int coins = 0;
 
@@ -23,9 +25,11 @@ public class GameEngine {
 		findExit();
 	}
 
-	public boolean playerWins() {
-		if(playerRow == exitRow && playerCol == exitCol){
-			return true;
+	public boolean playerWins() {   // updated to check for multiple exits
+		for (int[] exit : exits) {
+			if (playerRow == exit [0] && playerCol == exit[1]){
+				return true;
+			}
 		}
 		return false;
 	}
@@ -44,15 +48,16 @@ public class GameEngine {
 
 	private void findExit() {
 		for (int r = 0; r < 6; r++) {
-			for (int c = 0; c < 10; c++) {
+			for (int c = 0; c < 10; c++) {     				// Same code as before up to this point, but now we are adding the exit coordinates to an array list instead of just storing one exit
 				if (board.getCell(r, c) == EXIT) {
 					System.out.println("test");
 					exitRow = r;
 					exitCol = c;
-					return;
+					exits.add(new int[]{exitRow, exitCol});
 				}
 			}
 		}
+		return;
 	}
 
 	/**
