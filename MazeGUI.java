@@ -13,7 +13,8 @@ public class MazeGUI extends JFrame {
 	private GamePanel gamePanel;
 	private InfoPanel infoPanel;
 	private JMenuItem resetItem;
-	private int stepCounter;
+	private int stepCounter;  // local variable to track steps taken
+	private int coinCounter;  // local variable to store the number of coins collected
 
 	public MazeGUI() {
 		setTitle("16-Bit Maze");
@@ -41,13 +42,11 @@ public class MazeGUI extends JFrame {
 					case KeyEvent.VK_LEFT -> engine.movePlayer(0, -1);
 					case KeyEvent.VK_RIGHT -> engine.movePlayer(0, 1);
 				}
-<<<<<<< HEAD
-				stepCounter = currentBoard.stepCounter.getSteps();
-				infoPanel.setInfoSteps(stepCounter);
-=======
-				// Added update to infoPanel, updates whenever key is pressed
-				infoPanel.setInfoCoins(engine.getCoins());
->>>>>>> 6a0b277895a5c839852897440dde7136add1f797
+				stepCounter = currentBoard.stepCounter.getSteps();  // pull step counter from stepcounter class
+				infoPanel.setInfoSteps(stepCounter);				// update the info panel with the current step count
+				coinCounter = engine.getCoins();  					// pull coin counter directly from engine class
+				infoPanel.setInfoCoins(coinCounter);				// update the info panel with the current coin count
+
 				gamePanel.repaint();
 
 				// Check for victory
@@ -182,6 +181,7 @@ public class MazeGUI extends JFrame {
 				case 2 -> g.setColor(Color.YELLOW); // Coin
 				case 5 -> g.setColor(Color.MAGENTA); // Exit
 				case 6 -> g.setColor(Color.BLUE); // Player
+				case 7 -> g.setColor(Color.RED); // Hacker
 				default -> g.setColor(Color.BLACK);
 			}
 			g.fillRect(x, y, TILE_SIZE, TILE_SIZE);

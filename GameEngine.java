@@ -15,6 +15,7 @@ public class GameEngine {
 	private static final int COIN = 2;
 	private static final int EXIT = 5;
 	private static final int PLAYER = 6;
+	private static final int HACKER = 7;
 
 	public GameEngine(Board board) {
 		this.board = board;
@@ -73,6 +74,12 @@ public class GameEngine {
 		// Added check to see if target cell has a coin
 		if (targetCell == COIN){
 			coins++;
+			// System.out.println("Coins: " + coins);  // Testing code for seeing if the system is counting coins correctly in the engine
+		}
+
+		if (targetCell == HACKER) {
+
+			board.stepCounter.decreaseSteps(2);
 		}
 
 		// Move the Player
