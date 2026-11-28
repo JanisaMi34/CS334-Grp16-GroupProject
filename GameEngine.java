@@ -1,4 +1,5 @@
 package edu.txst.project;
+import java.util.ArrayList;
 
 public class GameEngine {
 	private Board board;
@@ -6,6 +7,7 @@ public class GameEngine {
 	private int playerCol;
 	private int exitRow;
 	private int exitCol;
+	private ArrayList<int[]> exits = new ArrayList<int[]>();  // exit array list to hold groups of exit coordinates
 	// Added coins field variable
 	private int coins = 0;
 
@@ -15,6 +17,7 @@ public class GameEngine {
 	private static final int COIN = 2;
 	private static final int EXIT = 5;
 	private static final int PLAYER = 6;
+	private static final int HACKER = 7;
 
 	public GameEngine(Board board) {
 		this.board = board;
@@ -22,9 +25,11 @@ public class GameEngine {
 		findExit();
 	}
 
-	public boolean playerWins() {
-		if(playerRow == exitRow && playerCol == exitCol){
-			return true;
+	public boolean playerWins() {   // updated to check for multiple exits
+		for (int[] exit : exits) {
+			if (playerRow == exit [0] && playerCol == exit[1]){
+				return true;
+			}
 		}
 		return false;
 	}
@@ -43,15 +48,16 @@ public class GameEngine {
 
 	private void findExit() {
 		for (int r = 0; r < 6; r++) {
-			for (int c = 0; c < 10; c++) {
+			for (int c = 0; c < 10; c++) {     				// Same code as before up to this point, but now we are adding the exit coordinates to an array list instead of just storing one exit
 				if (board.getCell(r, c) == EXIT) {
 					System.out.println("test");
 					exitRow = r;
 					exitCol = c;
-					return;
+					exits.add(new int[]{exitRow, exitCol});
 				}
 			}
 		}
+		return;
 	}
 
 	/**
@@ -73,6 +79,12 @@ public class GameEngine {
 		// Added check to see if target cell has a coin
 		if (targetCell == COIN){
 			coins++;
+			// System.out.println("Coins: " + coins);  // Testing code for seeing if the system is counting coins correctly in the engine
+		}
+
+		if (targetCell == HACKER) {
+
+			board.stepCounter.decreaseSteps(3);
 		}
 
 		// Move the Player
