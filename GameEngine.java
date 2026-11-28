@@ -84,7 +84,7 @@ public class GameEngine {
 
 		if (targetCell == HACKER) {
 
-			board.stepCounter.decreaseSteps(2);
+			board.stepCounter.decreaseSteps(3);
 		}
 
 		// Move the Player
