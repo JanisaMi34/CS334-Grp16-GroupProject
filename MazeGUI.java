@@ -15,6 +15,7 @@ public class MazeGUI extends JFrame {
 	private JMenuItem resetItem;
 	private int stepCounter;  // local variable to track steps taken
 	private int coinCounter;  // local variable to store the number of coins collected
+	private String[] options = {"Yes", "No"};
 
 	public MazeGUI() {
 		setTitle("16-Bit Maze");
@@ -54,11 +55,32 @@ public class MazeGUI extends JFrame {
 				if (engine.playerWins()) {
 					int totalPoints = (infoPanel.getInfoSteps() * -1) + (infoPanel.getInfoCoins() * 5);
 					JOptionPane.showMessageDialog(MazeGUI.this,
-							"Congratulations! You found the exit.\nYour got " + totalPoints + "points",
+							"Congratulations! You found the exit.\nYou got " + totalPoints + "points",
 							"Level Complete", JOptionPane.INFORMATION_MESSAGE);
 					// Optional: Disable engine to prevent movement after win
+
+					int choice = JOptionPane.showOptionDialog(MazeGUI.this,"Would you like to restart?","Level Complete",JOptionPane.DEFAULT_OPTION,
+						JOptionPane.QUESTION_MESSAGE,
+						null,
+						options,
+						options[0]
+					);
+
+					if (choice == 0){
+						resetGame();
+					}
+					else if (choice == 1){
 					engine = null;
+					currentBoard = null;		// extra cleaning, not necessarily necessary but may prevent duplication errors.
+
 					resetItem.setEnabled(false);
+
+					gamePanel.clearBoard();     // new method in gamePanel used to clear the board
+
+					infoPanel.setInfoSteps(0);  // resets steps to 0
+					infoPanel.setInfoCoins(0);	   // resets coins to 0
+
+					}
 				}
 			}
 		});
@@ -157,6 +179,11 @@ public class MazeGUI extends JFrame {
 
 		public void setBoard(Board board) {
 			this.board = board;
+		}
+
+		public void clearBoard(){
+			this.board = null;
+			repaint();
 		}
 
 		@Override
