@@ -132,6 +132,7 @@ public class MazeGUI extends JFrame {
 			gamePanel.repaint();
 			// Reset Coins
 			infoPanel.setInfoCoins(0);
+			infoPanel.setInfoSteps(0);
 		}
 	}
 
